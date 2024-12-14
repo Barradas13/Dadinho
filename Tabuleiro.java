@@ -123,8 +123,13 @@ public class Tabuleiro extends JPanel implements ActionListener {
         if(dados_duvidados >= qtd_anterior){
             tirarDado(jogador_atual);
         }else{
-            tirarDado((jogador_atual - 1) % jogadores.size());
-            jogador_atual = (jogador_atual - 1) % jogadores.size();
+            System.out.println(jogador_atual);
+
+            if(jogador_atual == -1){
+                jogador_atual = jogadores.size() - 1;
+            }
+
+            tirarDado(jogador_atual);
         }
 
         if(jogadores.size() == 1){
