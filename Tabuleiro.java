@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.Dimension;
 
 public class Tabuleiro extends JPanel implements ActionListener {
     public static JLabel lblquantidade;
@@ -179,7 +180,9 @@ public class Tabuleiro extends JPanel implements ActionListener {
                 qtd_anterior = qtd_INT;
     
                 jogador_atual = (jogador_atual + 1) % jogadores.size();
-    
+
+                JOptionPane.showMessageDialog(this, "O próximo jogador é o: " + jogadores.get(jogador_atual).getNome());
+
                 informacoesJogador.setText(jogadores.get(jogador_atual).toString());
                 informacoesPassada.setText("A jogada passada foi: " + qtd_anterior + " " + dado_anterior);
             } else {
@@ -220,10 +223,16 @@ public class Tabuleiro extends JPanel implements ActionListener {
     }
 
     public static void tirarDado(int jogador){
-    
-        jogadores.get(jogador).getDados().remove(0);
+        
+        if(jogadores.get(jogador).getDados().size() >= 1){
+            jogadores.get(jogador).getDados().remove(0);
+        }
 
         JOptionPane.showMessageDialog(null, "O jogador que perdeu dado foi o: " + jogadores.get(jogador).getNome() + " e agora está com " + jogadores.get(jogador).getDados().size(), null, jogador);
+
+        for (Jogador i : jogadores) {
+            i.rolarDados();
+        }
 
         if(jogadores.get(jogador).getDados().size() <= 0){
             jogadores.remove(jogador);
@@ -232,6 +241,7 @@ public class Tabuleiro extends JPanel implements ActionListener {
     }
 
     public static void exec(){
+        UIManager.put("OptionPane.minimumSize", new Dimension(500, 500));
 
         int qtdJogadores = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade de jogadores a jogar"));
 

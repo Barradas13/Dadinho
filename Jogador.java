@@ -2,9 +2,11 @@
 
 import java.util.ArrayList;
 import javax.swing.*;
+import java.util.Random;
 
 class Jogador {
-    
+    public static Random gerador = new Random();
+
     public String nome;
     public int pontos;
     public ArrayList<Integer> dados = null;
@@ -48,6 +50,13 @@ class Jogador {
         String nome = JOptionPane.showInputDialog("Digite o nome do jogador:");
         
         return new Jogador(nome);
+    }
+
+    public void rolarDados(){
+        for(int i = 0; i < this.getDados().size(); i++){
+            this.dados.remove(0);
+            this.dados.add(gerador.nextInt(6) + 1);
+        }
     }
 
     public String toString(){
