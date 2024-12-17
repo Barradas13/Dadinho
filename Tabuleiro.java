@@ -51,8 +51,8 @@ public class Tabuleiro extends JPanel implements ActionListener {
         txtquantidade.setToolTipText("Informe a quantidade");
         txtdado.setToolTipText("Informe o dado");
 
-        informacoesJogador.setBounds(50, 20, 300, 25);
-        informacoesPassada.setBounds(50, 50, 300, 25);
+        informacoesJogador.setBounds(50, 20, 500, 25);
+        informacoesPassada.setBounds(50, 50, 500, 25);
 
         // Quantidade
         lblquantidade.setBounds(50, 100, 150, 25);      
@@ -113,21 +113,24 @@ public class Tabuleiro extends JPanel implements ActionListener {
         int dados_duvidados = 0;
 
         for(Jogador i: jogadores){
+            System.out.print("dados: ");
             for(int j : i.getDados()){
+                System.out.print(j);
                 if(j == dado_anterior || j == 1){
                     dados_duvidados++;
                 }
-            }
+            }System.out.println();
         }
-    
+
+        System.out.println(jogador_atual + " atual");
+        System.out.println();
+
+        
         if(dados_duvidados >= qtd_anterior){
             tirarDado(jogador_atual);
         }else{
-            System.out.println(jogador_atual);
-
-            if(jogador_atual == -1){
-                jogador_atual = jogadores.size() - 1;
-            }
+            
+            jogador_atual = (jogador_atual - 1) % jogadores.size();
 
             tirarDado(jogador_atual);
         }
@@ -203,6 +206,10 @@ public class Tabuleiro extends JPanel implements ActionListener {
     }
 
     public static boolean validarJogada(int dado_anterior, int qtd_anterior, int dado_atual, int qtd_atuals){
+        
+        if(dado_atual > 6 || dado_atual < 1){
+            return false;
+        }
 
         if(dado_anterior == 1){
             if(dado_atual == 1){
@@ -246,6 +253,7 @@ public class Tabuleiro extends JPanel implements ActionListener {
     }
 
     public static void exec(){
+        //para as caixas de texto ficarem maior
         UIManager.put("OptionPane.minimumSize", new Dimension(500, 500));
 
         int qtdJogadores = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade de jogadores a jogar"));
